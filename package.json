@@ -26,7 +26,10 @@
   ],
   "scripts": {
     "start": "node ./bin/vibe-kit.js",
-    "test": "node --test"
+    "test": "node --test",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "repository": {
     "type": "git",
@@ -44,5 +47,8 @@
     "developer-tools",
     "workflow",
     "skills"
-  ]
+  ],
+  "devDependencies": {
+    "vitepress": "^1.6.4"
+  }
 }
