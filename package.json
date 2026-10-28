@@ -1,0 +1,48 @@
+{
+  "name": "@doni354/vibe-kit",
+  "version": "0.1.0",
+  "description": "End-to-end AI coding workflow toolkit: planning, architecture, implementation, verification, and documentation.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "bin": {
+    "vibe-kit": "./bin/vibe-kit.js"
+  },
+  "main": "./lib/cli.js",
+  "exports": {
+    ".": "./lib/cli.js"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "skills/",
+    "rules/",
+    "templates/",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "start": "node ./bin/vibe-kit.js",
+    "test": "node --test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/doni354/vibe-kit.git"
+  },
+  "homepage": "https://github.com/doni354/vibe-kit#readme",
+  "bugs": {
+    "url": "https://github.com/doni354/vibe-kit/issues"
+  },
+  "keywords": [
+    "ai-coding",
+    "vibe-coding",
+    "coding-agent",
+    "antigravity",
+    "developer-tools",
+    "workflow",
+    "skills"
+  ]
+}
