@@ -164,4 +164,6 @@ Vibe Kit adheres strictly to Google Antigravity customization specifications:
 
 ## License
 
+Vibe Kit is licensed under the MIT License.
+See the [LICENSE](./LICENSE) file for details.
 MIT © Doni
