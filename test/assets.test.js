@@ -55,7 +55,9 @@ test('structural: templates have clean placeholders and no local machine paths o
     'architecture.md',
     'data-model.md',
     'design-system.md',
-    'plan.md'
+    'plan.md',
+    'storyboard.md',
+    'video-qc-checklist.md'
   ];
 
   for (const t of expectedTemplates) {
