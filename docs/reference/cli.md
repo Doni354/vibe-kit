@@ -32,14 +32,44 @@ Vibe Kit uses a custom argument parser implemented in `lib/cli.js`:
 Initializes workflow skills, rules, and living documentation templates in the target directory.
 
 ```bash
-vibe-kit init [--target PATH] [--scope workspace|global] [--profile base|frontend|backend|fullstack] [--conflict keep|replace|skip] [--dry-run] [--yes]
+vibe-kit init [--target PATH] [--scope workspace|global] [--profile base|frontend|backend|fullstack] [--pack PACK] [--conflict keep|replace|skip] [--dry-run] [--yes]
 ```
 
 **Behavior & Guarantees:**
 - **Pre-flight Safety Check**: Verifies that every source file exists and every destination path is strictly contained within the target directory before writing or creating any directories.
 - **Toolkit Protection**: Rejects initializing directly inside the Vibe Kit toolkit repository itself or its parent directories.
-- **Manifest Merging**: If an existing manifest is present (for example, upgrading from `base` to `fullstack`), new files are added while preserving records of previously installed files.
+- **Manifest Merging**: If an existing manifest is present (for example, upgrading from `base` to `fullstack`, or adding `role:video-motion`), new files are added while preserving records of previously installed files.
 - **Atomic Journal Rollback**: Tracks file creations and overwrites. If any file fails to write or if manifest generation fails, all modified files are restored from temporary `.vibe-rollback-*` snapshots, created files are unlinked, and the initial manifest is restored.
+
+---
+
+### `detect`
+
+Inspects the project repository to detect technologies and recommend role packs without modifying any files.
+
+```bash
+vibe-kit detect [--target PATH] [--save] [--dry-run] [--json]
+```
+
+**Options:**
+- `--save`: Persists detected technologies and recommendations to `.vibe-kit.json`.
+- `--json`: Outputs raw JSON analysis for programmatic inspection.
+
+---
+
+### `config`
+
+Inspects or modifies persistent project configuration (`.vibe-kit.json`) and user overrides.
+
+```bash
+vibe-kit config [--target PATH] [--show] [--enable TECH] [--disable TECH] [--pack PACK] [--reset] [--dry-run] [--json]
+```
+
+**Options:**
+- `--enable TECH`: Manually enables a specific technology override (e.g. `tech:postgresql`).
+- `--disable TECH`: Manually disables an automated technology detection.
+- `--pack PACK`: Overrides persistent role packs to install.
+- `--reset`: Clears all user overrides, restoring pure automated detection defaults.
 
 ---
 
@@ -48,7 +78,7 @@ vibe-kit init [--target PATH] [--scope workspace|global] [--profile base|fronten
 Updates previously installed workflow assets to the current toolkit version using an intelligent three-way comparison.
 
 ```bash
-vibe-kit update [--target PATH] [--scope workspace|global] [--profile base|frontend|backend|fullstack] [--conflict keep|replace|skip] [--dry-run] [--yes] [--force]
+vibe-kit update [--target PATH] [--scope workspace|global] [--profile base|frontend|backend|fullstack] [--pack PACK] [--conflict keep|replace|skip] [--dry-run] [--yes] [--force]
 ```
 
 **Requirements:**
@@ -140,11 +170,27 @@ vibe-kit doctor [--target PATH]
 ### `--profile base|frontend|backend|fullstack`
 - **Type**: String
 - **Default**: `fullstack`
-- **Description**: Determines which skills and templates are included.
-  - `base`: `project-onboarding`, `documentation`, `verification`
-  - `frontend`: `base` + `ui-implementation`
-  - `backend`: `base` + `backend-feature`
-  - `fullstack`: All 5 skills + all 7 templates
+- **Description**: Legacy profile alias mapping to modular packs:
+  - `base`: Maps to `core` (`project-onboarding`, `documentation`, `verification`, engineering rules, and base planning templates).
+  - `frontend`: Maps to `core` + `role:frontend` (+ `ui-implementation`, `design-system.md`).
+  - `backend`: Maps to `core` + `role:backend` (+ `backend-feature`, `api-contracts.md`, `data-model.md`).
+  - `fullstack`: Maps to `core` + `role:frontend` + `role:backend` + `role:fullstack` (+ `fullstack-integration`, `architecture.md`).
+
+---
+
+### `--pack PACK`
+- **Type**: String (comma-separated pack IDs)
+- **Description**: Explicitly selects modular packs to install, automatically resolving dependencies:
+  - `core`: Foundational onboarding, documentation, verification, and planning templates.
+  - `role:frontend`: UI engineering workflow and design system template.
+  - `role:backend`: Server engineering workflow, API contracts, and data model templates.
+  - `role:fullstack`: Cross-layer coordination workflow and system architecture template.
+  - `role:video-motion`: Engine-independent video workflow, storyboard plan, and QC checklist.
+- **Example**:
+  ```bash
+  vibe-kit init --pack role:video-motion
+  vibe-kit init --profile backend --pack role:video-motion
+  ```
 
 ---
 

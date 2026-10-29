@@ -6,18 +6,20 @@ Vibe Kit provides a modular architecture allowing teams to install exactly the a
 
 ## Profile Matrix
 
-The toolkit defines four distinct profiles in `lib/cli.js`:
+The toolkit maps legacy profiles to modular packs (`lib/pack-resolver.js`):
 
-| Profile | Target Project Type | Included Skills | Rules Installed | Templates Installed |
+| Profile | Mapped Pack(s) | Included Skills | Rules Installed | Templates Installed |
 | :--- | :--- | :--- | :--- | :--- |
-| **`base`** | Core libraries, CLI tools, scripts, utilities | `project-onboarding`<br>`documentation`<br>`verification` | Workspace rule | All 7 living templates |
-| **`frontend`** | SPAs, UI component libraries, design systems, web apps | Base skills +<br>`ui-implementation` | Workspace rule | All 7 living templates |
-| **`backend`** | APIs, microservices, database backends, serverless functions | Base skills +<br>`backend-feature` | Workspace rule | All 7 living templates |
-| **`fullstack`** | Full-stack applications, monolithic apps, modern web platforms | All 5 skills | Workspace rule | All 7 living templates |
+| **`base`** | `core` | `project-onboarding`<br>`documentation`<br>`verification` | Workspace rule | Core templates (`PROJECT_CONTEXT.md`, `README.md`, `plan.md`) |
+| **`frontend`** | `core`<br>`role:frontend` | Base skills +<br>`ui-implementation` | Workspace rule | Core templates +<br>`design-system.md` |
+| **`backend`** | `core`<br>`role:backend` | Base skills +<br>`backend-feature` | Workspace rule | Core templates +<br>`api-contracts.md`, `data-model.md` |
+| **`fullstack`** | `core`<br>`role:frontend`<br>`role:backend`<br>`role:fullstack` | All 6 cross-layer skills incl.<br>`fullstack-integration` | Workspace rule | Core + frontend + backend +<br>`architecture.md` |
+
+> **Note on `base` Profile Evolution**: In v0.1.0, `--profile base` copied all documentation templates. In the modular pack architecture (v0.2.0+), `--profile base` maps cleanly to `core`, installing only foundational planning templates to prevent unnecessary clutter in minimal projects. Existing v0.1.0 installations retain all their templates during updates.
 
 ---
 
-## The 5 Antigravity Skills
+## The 7 Antigravity Skills
 
 Each skill is located in `.agents/skills/<skill-name>/SKILL.md` and contains valid YAML frontmatter (`name` and `description`) conforming to Google Antigravity standards.
 
@@ -65,6 +67,24 @@ Each skill is located in `.agents/skills/<skill-name>/SKILL.md` and contains val
   - **Test Determinism**: Forbids arbitrary `sleep()` delays or flaky asynchronous polling.
   - **Zero Data Leakage**: Verifies that no API keys, credentials, or local environment paths are committed to version control.
 
+### 6. `fullstack-integration`
+- **Frontmatter**: `name: fullstack-integration`
+- **Purpose**: Coordinates cross-layer features spanning client UI and server backend without contract drift or asymmetrical assumptions.
+- **Workflow Highlights**:
+  - **Contract-First Design**: Formalizes API contracts in `api-contracts.md` before writing implementation code.
+  - **Implementation Sequencing**: Phase A (Backend route / stub) -> Phase B (Client API service) -> Phase C (UI integration).
+  - **Boundary State Synchronization**: Coordinates optimistic updates, field-level validation errors, and session revocation.
+  - **End-to-End Verification**: Verifies full round-trip workflows from user interaction to database persistence.
+
+### 7. `video-motion`
+- **Frontmatter**: `name: video-motion`
+- **Purpose**: Engine-independent workflow for programmatic video composition, motion design, timeline planning, and quality control.
+- **Workflow Highlights**:
+  - **Creative Brief & Storyboarding**: Structures narrative arc and frame-accurate timeline planning in `storyboard.md`.
+  - **Pacing & Typography Guidelines**: Adaptable baselines for safe title areas, reading time pacing, and audio ducking.
+  - **Tooling Boundary Transparency**: Enforces explicit distinction between architectural storyboard planning and actual engine execution (e.g. Remotion, FFmpeg).
+  - **QC & Delivery Checklist**: Pre- and post-render validation using `video-qc-checklist.md`.
+
 ---
 
 ## Engineering Standards Rules
@@ -87,16 +107,18 @@ Installed during `global` scope. Enforces cross-workspace guidelines for users u
 
 In workspace installations, Vibe Kit initializes a standardized documentation directory:
 
-| Template | File | Purpose |
-| :--- | :--- | :--- |
-| **Project Context** | `PROJECT_CONTEXT.md` | Single source of truth for project vision, user roles, business rules, and tech stack constraints. |
-| **Architecture** | `architecture.md` | System topologies, subsystem boundaries, data flows, and Mermaid diagrams. |
-| **API Contracts** | `api-contracts.md` | Endpoints, query parameters, payload schemas, headers, status codes, and error models. |
-| **Data Model** | `data-model.md` | Entity relationships, database schemas, field constraints, indexes, and migration plans. |
-| **Design System** | `design-system.md` | Design tokens, typography hierarchy, component patterns, and accessibility guidelines. |
-| **Implementation Plan** | `plan.md` | Step-by-step phased milestones, technical dependencies, acceptance criteria, and rollback triggers. |
-| **Workflow Index** | `README.md` | Guidelines on maintaining and reading the living documentation artifacts. |
+| Template | File | Purpose | Contributed By |
+| :--- | :--- | :--- | :--- |
+| **Project Context** | `PROJECT_CONTEXT.md` | Single source of truth for project vision, user roles, business rules, and constraints. | `core` |
+| **Workflow Index** | `README.md` | Guidelines on maintaining and reading living documentation artifacts. | `core` |
+| **Implementation Plan** | `plan.md` | Phased milestones, technical dependencies, acceptance criteria, and rollback triggers. | `core` |
+| **Design System** | `design-system.md` | Design tokens, typography hierarchy, component patterns, and accessibility guidelines. | `role:frontend` |
+| **API Contracts** | `api-contracts.md` | Endpoints, query parameters, payload schemas, headers, status codes, and error models. | `role:backend` |
+| **Data Model** | `data-model.md` | Entity relationships, database schemas, field constraints, indexes, and migrations. | `role:backend` |
+| **Architecture** | `architecture.md` | System topologies, subsystem boundaries, data flows, and cross-layer diagrams. | `role:fullstack` |
+| **Storyboard Plan** | `storyboard.md` | Engine-independent scene breakdown, narrative pacing, and asset inventory. | `role:video-motion` |
+| **Video QC Checklist** | `video-qc-checklist.md` | Quality control checklist for visual hierarchy, audio ducking, and technical export specs. | `role:video-motion` |
 
-::: tip Re-Profile Merging
-If you initially install the `base` profile and later re-run `vibe-kit init --profile fullstack`, Vibe Kit automatically detects the new skills (`backend-feature`, `ui-implementation`), installs them, and merges the new entries into your existing `.vibe-kit-manifest.json` without damaging previously existing files.
+::: tip Modular Asset Merging
+When adding new packs (e.g. `vibe-kit init --pack role:video-motion`), Vibe Kit installs the specific role skills and templates and merges them into your existing `.vibe-kit-manifest.json` without modifying or overwriting your previously customized files.
 :::

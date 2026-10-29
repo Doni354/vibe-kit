@@ -21,15 +21,19 @@
 
 ## 2. Narrative Arc Outline
 
-- **00:00 - 00:05 (Hook)**: [Visual hook and problem statement; grabs immediate attention]
-- **00:05 - 00:18 (Context & Problem)**: [Establishes current developer friction and pain point]
-- **00:18 - 00:45 (Solution & Feature Demonstration)**: [Step-by-step showcase of core capabilities]
-- **00:45 - 00:55 (Results & Benchmark)**: [Outcome metrics, consistency improvement, speed gain]
-- **00:55 - 01:00 (Call-to-Action & Outro)**: [Logo lockup, URL, and explicit next step]
+> *Note: The narrative arc breakdown below represents an example 60s explainer structure. Percentages and time intervals are customizable defaults—adapt duration, pacing, and sections to your specific project brief.*
+
+- **00:00 - 00:05 (Hook / 0-10% example)**: [Visual hook and problem statement; grabs immediate attention]
+- **00:05 - 00:18 (Context & Problem / 10-30% example)**: [Establishes current developer friction and pain point]
+- **00:18 - 00:45 (Solution & Feature Demonstration / 30-75% example)**: [Step-by-step showcase of core capabilities]
+- **00:45 - 00:55 (Results & Benchmark / 75-90% example)**: [Outcome metrics, consistency improvement, speed gain]
+- **00:55 - 01:00 (Call-to-Action & Outro / 90-100% example)**: [Logo lockup, URL, and explicit next step]
 
 ---
 
 ## 3. Frame-Accurate Scene Breakdown
+
+> *Note: Timecodes use `MM:SS:FF` at 30 FPS as a standard reference example. Calibrate frame rate (e.g. 24, 30, or 60 FPS) and notation to your rendering pipeline.*
 
 | Scene ID | Timecode (MM:SS:FF) | Frames | Visual Elements & Composition | On-Screen Text / Typography | Motion & Transitions | Audio / Voiceover Cue |
 |---|---|---|---|---|---|---|

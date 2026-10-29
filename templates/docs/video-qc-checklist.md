@@ -8,7 +8,7 @@
 
 - [ ] **Hook Effectiveness**: The first 3 seconds communicate the core subject or hook without delay.
 - [ ] **Scene Cuts**: Cuts and transitions land on intended beats, audio transients, or speech pauses.
-- [ ] **Text Readability Pacing**: Every text overlay remains on screen long enough for comfortable reading (minimum 1 second per 3 words + 1 second base reading time).
+- [ ] **Text Readability Pacing**: Every text overlay remains on screen long enough for comfortable reading (baseline guideline: ~1 second per 3 words + 1 second base reading time, calibrated to target audience).
 - [ ] **No Blank Frames**: Verified that no empty or unrendered frames exist between scene transitions.
 - [ ] **Total Frame Exactness**: Total duration in frames exactly equals $\text{Duration (seconds)} \times \text{FPS}$.
 
@@ -16,7 +16,7 @@
 
 ## 2. Visual Hierarchy, Typography & Safe Zones
 
-- [ ] **Title Safe Area**: All critical copy, subtitles, and brand marks stay within the 90% inner safe area (clear of mobile/feed UI overlays).
+- [ ] **Title Safe Area**: All critical copy, subtitles, and brand marks stay within designated safe areas (e.g. 90% inner safe guide baseline or platform-specific feed UI margins).
 - [ ] **Contrast & Legibility**: Text maintains high contrast against moving background elements (WCAG AA equivalent visual contrast).
 - [ ] **Typography Hierarchy**: Font size scaling clearly differentiates primary headers from secondary supporting labels.
 - [ ] **Focal Point Discipline**: Exactly one primary focal element draws visual attention per frame; secondary animations support rather than distract.
@@ -28,7 +28,7 @@
 ## 3. Audio & Synchronization Checks
 
 - [ ] **Voiceover Clarity**: Spoken audio is crisp, understandable, and free of background noise or clipping.
-- [ ] **Audio Ducking**: Background music volume drops by 12dB to 18dB during voiceover or dialog sections.
+- [ ] **Audio Ducking**: Background music volume ducks adequately during voiceover or dialog (typically -12dB to -18dB as an adjustable starting baseline, tuned for speech clarity).
 - [ ] **Sync Precision**: Keyframe visual accents (e.g. badge pop, button press) align to the exact frame of the corresponding sound effect or beat.
 - [ ] **Loudness Standards**: Audio levels meet target streaming standards (e.g. -14 LUFS integrated for YouTube/Web, peak not exceeding -1.0 dBTP).
 - [ ] **Audio Fadeout**: Outro music and ambient sound fade smoothly without abrupt audio cutoffs.

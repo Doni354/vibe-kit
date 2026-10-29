@@ -46,35 +46,35 @@ Use this workflow to design, structure, plan, and verify programmatic video comp
    $$\text{Total Frames} = \text{Duration (seconds)} \times \text{FPS}$$
 
 ### Step 2: Narrative Structure & Storyboarding
-1. Structure the narrative arc using classic pacing principles:
-   - **Hook (0-15%)**: Immediate visual disruption, core question, or statement.
-   - **Setup & Problem (15-35%)**: Establish context and user friction point.
-   - **Solution / Feature Showcase (35-75%)**: Clear demonstration of capability or value proposition.
-   - **Climax / Payoff (75-90%)**: The key outcome, benchmark, or transformation.
-   - **Call-to-Action (CTA) & Outro (90-100%)**: Clear next step, brand logo, and URL.
+1. Structure the narrative arc using classic pacing principles (the following percentages serve as a customizable reference baseline for product/explainer videos, not a rigid universal dogma; adapt to your project brief):
+   - **Hook (0-15% default)**: Immediate visual disruption, core question, or statement.
+   - **Setup & Problem (15-35% default)**: Establish context and user friction point.
+   - **Solution / Feature Showcase (35-75% default)**: Clear demonstration of capability or value proposition.
+   - **Climax / Payoff (75-90% default)**: The key outcome, benchmark, or transformation.
+   - **Call-to-Action (CTA) & Outro (90-100% default)**: Clear next step, brand logo, and URL.
 2. Document the narrative outline in `docs/ai-workflow/storyboard.md`.
 
 ### Step 3: Frame-Accurate Scene Breakdown & Timeline Planning
 1. Break down the timeline into discrete scenes or sequence blocks.
 2. For each scene, document in `docs/ai-workflow/storyboard.md`:
    - **Scene ID & Name**: Unique identifier (e.g. `Scene_01_Hook`).
-   - **Timecode Range**: Start and end timestamps in `MM:SS:FF` and corresponding frame range (e.g. frames `0` to `90` at 30 FPS = `00:00:00` - `00:03:00`).
+   - **Timecode Range**: Start and end timestamps in `MM:SS:FF` (or project-preferred timecode convention) and corresponding frame range (e.g. frames `0` to `90` at 30 FPS = `00:00:00` - `00:03:00`). Calibrate frame rates (24, 30, 60 FPS) to target platform specs.
    - **Visual Description**: Camera perspective, background, visual elements, focal subject.
    - **Text Overlays**: Exact on-screen copy, font size hierarchy, and positioning.
    - **Motion & Transitions**: Entrance animation, internal camera motion, and exit transition (e.g. smooth cross-dissolve, directional wipe, or hard cut).
    - **Audio / Voiceover Cue**: Specific spoken words or music beats that anchor visual events.
 
 ### Step 4: Typography, Composition & Visual Hierarchy
-1. **Safe Title Zones**: Keep all critical text and logos within the 90% inner safe area (avoid platform UI overlays like captions, profile icons, and like buttons).
+1. **Safe Title Zones**: Keep critical text and logos within safe margin boundaries (default to 90% inner safe guide as a starting baseline; adjust for platform-specific overlay areas such as TikTok/Reels UI margins or broadcast EBU R95 specs).
 2. **Text Readability & Pacing**:
-   - Calculate reading time: Allow minimum 1 second per 3 words of on-screen text, plus 1 second base reading time.
+   - Calculate reading time: As an adaptable guideline, allow approximately 1 second per 3 words of on-screen text, plus 1 second base reading time (calibrate to target audience reading speed and visual complexity).
    - High contrast between text and animated backgrounds (use subtle drop-shadows, scrims, or backdrop overlays).
 3. **Visual Hierarchy**: Exactly one primary focal point per frame. Secondary elements must not compete for attention.
 
 ### Step 5: Motion Principles & Easing Consistency
 1. Apply consistent physics and easing across the entire composition:
    - Use natural easing curves (e.g. `cubic-bezier` ease-out for entrances, ease-in for exits, smooth spring physics). Avoid linear interpolation for organic movement.
-   - Keep transition durations snappy (typically 200ms - 450ms / 6 to 15 frames at 30 FPS) so pacing remains brisk.
+   - Keep transition durations snappy (typically 200ms - 450ms / 6 to 15 frames at 30 FPS as a common baseline) so pacing remains brisk.
 2. Maintain motion continuity: maintain directional momentum across scene cuts (e.g. element exiting right is followed by element entering from left).
 
 ### Step 6: Asset Inventory & Provenance
@@ -88,7 +88,7 @@ Use this workflow to design, structure, plan, and verify programmatic video comp
 ### Step 7: Audio Requirements, Sourcing & Synchronization
 1. Map audio layers:
    - **Voiceover / Speech**: Primary audio track driving timeline pacing.
-   - **Background Music**: Sets mood and energy; duck music volume by 12dB - 18dB during spoken sections.
+   - **Background Music**: Sets mood and energy; duck music volume by 12dB - 18dB (typical starting baseline; calibrate by ear to match voiceover presence and music dynamics) during spoken sections.
    - **Sound Effects (SFX)**: Accents and whooshes anchored to keyframe peaks of major visual transitions.
 2. Align cuts to musical transients or speech pauses for natural audiovisual synchronization.
 

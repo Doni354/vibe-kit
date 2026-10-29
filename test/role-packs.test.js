@@ -255,3 +255,41 @@ test('cli integration: uninstall cleans up role pack files and removes empty par
     fs.rmSync(tmp, { recursive: true, force: true });
   }
 });
+
+test('phase 3.1 audit: video-motion formulas, pacing, and safe zones are designated as adaptable guidelines', () => {
+  const skill = fs.readFileSync(path.join(ROOT, 'skills', 'video-motion', 'SKILL.md'), 'utf8');
+  assert.match(skill, /customizable reference baseline/i);
+  assert.match(skill, /not a rigid universal dogma/i);
+  assert.match(skill, /adaptable guideline/i);
+  assert.match(skill, /typical starting baseline/i);
+
+  const storyboard = fs.readFileSync(path.join(ROOT, 'templates', 'docs', 'storyboard.md'), 'utf8');
+  assert.match(storyboard, /customizable defaults/i);
+  assert.match(storyboard, /standard reference example/i);
+
+  const qc = fs.readFileSync(path.join(ROOT, 'templates', 'docs', 'video-qc-checklist.md'), 'utf8');
+  assert.match(qc, /baseline guideline/i);
+  assert.match(qc, /adjustable starting baseline/i);
+});
+
+test('phase 3.1 audit: legacy profile base maps to core and maintains template isolation', () => {
+  const mapped = mapLegacyProfileToPacks('base');
+  assert.deepEqual(mapped, ['core']);
+
+  const res = resolvePacks(['core'], PACK_REGISTRY);
+  const dests = res.assets.map(a => a.dest);
+
+  // Core includes foundational planning templates
+  assert(dests.includes('docs/ai-workflow/PROJECT_CONTEXT.md'));
+  assert(dests.includes('docs/ai-workflow/README.md'));
+  assert(dests.includes('docs/ai-workflow/plan.md'));
+
+  // Core excludes specialized role templates
+  assert.equal(dests.includes('docs/ai-workflow/design-system.md'), false);
+  assert.equal(dests.includes('docs/ai-workflow/api-contracts.md'), false);
+  assert.equal(dests.includes('docs/ai-workflow/data-model.md'), false);
+  assert.equal(dests.includes('docs/ai-workflow/architecture.md'), false);
+  assert.equal(dests.includes('docs/ai-workflow/storyboard.md'), false);
+  assert.equal(dests.includes('docs/ai-workflow/video-qc-checklist.md'), false);
+});
+
