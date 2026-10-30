@@ -16,10 +16,10 @@
 Autonomous AI coding agents frequently struggle with context fragmentation, hallucinations, missing architecture artifacts, and unconstrained code generation. 
 
 Vibe Kit provides a structured, safety-first framework:
-- **7 Antigravity Skills**: Specialized instructions for onboarding, documentation, defensive backend APIs, accessible UI design, cross-layer fullstack integration, engine-independent video/motion, and 5-layer verification gates.
+- **9 Antigravity Skills**: Specialized instructions for onboarding, documentation, defensive backend APIs, accessible UI design, cross-layer fullstack integration, engine-independent video/motion, Firebase cloud engineering, PostgreSQL relational database engineering, and 5-layer verification gates.
 - **Unconditional Engineering Rules**: Workspace rules with `trigger: always_on` to enforce modularity, testing, security, and agent conduct.
 - **9 Living Architecture Templates**: Structured documents in `docs/ai-workflow/` for project context, API contracts, data models, design systems, architecture, implementation plans, storyboards, and video QC checklists.
-- **Deterministic Pack Architecture**: Modular packs (`core`, `role:frontend`, `role:backend`, `role:fullstack`, `role:video-motion`) resolved deterministically with topological ordering and deduplication.
+- **Deterministic Pack Architecture**: Modular role and technology packs (`core`, `role:frontend`, `role:backend`, `role:fullstack`, `role:video-motion`, `tech:firebase`, `tech:postgresql`) resolved deterministically with topological ordering and deduplication.
 - **Safety-First CLI**: Built-in path traversal guards, ancestor symlink escape prevention, SHA-256 manifest tracking, collision-free backups, and atomic transactional rollback.
 
 ---
@@ -116,6 +116,26 @@ Vibe Kit supports both legacy profiles and explicit modular packs (`--pack`):
 | `role:backend` | `role` | Server engineering workflow (`backend-feature` skill + `api-contracts.md`, `data-model.md` templates). Requires `core`. |
 | `role:fullstack` | `role` | Cross-layer coordination workflow (`fullstack-integration` skill + `architecture.md` template). Requires `core`, `role:frontend`, `role:backend`. |
 | `role:video-motion` | `role` | Engine-independent video workflow (`video-motion` skill + `storyboard.md`, `video-qc-checklist.md` templates). Requires `core`. |
+| `tech:firebase` | `tech` | Firebase practices: service scoping, Firestore data modeling, client vs admin trust boundary, security rules, Cloud Functions (`firebase` skill). Requires `core`. |
+| `tech:postgresql` | `tech` | PostgreSQL relational database engineering: schema design, constraints, data types, indexing, transactions, migrations, and `EXPLAIN` query analysis (`postgresql` skill). Requires `core`. |
+
+#### Combining Role & Technology Packs
+
+Technology packs can be composed seamlessly with any role pack or profile:
+
+```bash
+# Frontend web application using Firebase directly
+vibe-kit init --profile frontend --pack tech:firebase --yes
+
+# Backend service using PostgreSQL
+vibe-kit init --profile backend --pack tech:postgresql --yes
+
+# Fullstack platform using both PostgreSQL and Firebase
+vibe-kit init --profile fullstack --pack tech:postgresql,tech:firebase --yes
+
+# Add PostgreSQL workflow to an existing workspace
+vibe-kit update --pack tech:postgresql --yes
+```
 
 ---
 

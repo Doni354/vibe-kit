@@ -186,10 +186,14 @@ vibe-kit doctor [--target PATH]
   - `role:backend`: Server engineering workflow, API contracts, and data model templates.
   - `role:fullstack`: Cross-layer coordination workflow and system architecture template.
   - `role:video-motion`: Engine-independent video workflow, storyboard plan, and QC checklist.
+  - `tech:firebase`: Firebase platform workflow, trust boundaries, Security Rules, Firestore, and emulator testing.
+  - `tech:postgresql`: PostgreSQL engineering workflow, schema design, indexing, transactions, and safe migrations.
 - **Example**:
   ```bash
   vibe-kit init --pack role:video-motion
-  vibe-kit init --profile backend --pack role:video-motion
+  vibe-kit init --pack role:frontend,tech:firebase
+  vibe-kit init --pack role:backend,tech:postgresql
+  vibe-kit init --profile backend --pack tech:postgresql
   ```
 
 ---

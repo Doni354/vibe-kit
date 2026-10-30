@@ -19,7 +19,7 @@ The toolkit maps legacy profiles to modular packs (`lib/pack-resolver.js`):
 
 ---
 
-## The 7 Antigravity Skills
+## The 9 Antigravity Skills
 
 Each skill is located in `.agents/skills/<skill-name>/SKILL.md` and contains valid YAML frontmatter (`name` and `description`) conforming to Google Antigravity standards.
 
@@ -84,6 +84,43 @@ Each skill is located in `.agents/skills/<skill-name>/SKILL.md` and contains val
   - **Pacing & Typography Guidelines**: Adaptable baselines for safe title areas, reading time pacing, and audio ducking.
   - **Tooling Boundary Transparency**: Enforces explicit distinction between architectural storyboard planning and actual engine execution (e.g. Remotion, FFmpeg).
   - **QC & Delivery Checklist**: Pre- and post-render validation using `video-qc-checklist.md`.
+
+### 8. `firebase`
+- **Frontmatter**: `name: firebase`
+- **Purpose**: Workflow for Firebase and Google Cloud serverless architecture, emphasizing trust boundaries, declarative security rules, Firestore access patterns, and local emulator verification.
+- **Workflow Highlights**:
+  - **Service Scoping & Trust Boundary**: Strictly differentiates client SDK access (enforced by Security Rules) from Firebase Admin SDK / Cloud Functions operations (which bypass Security Rules with administrative privilege). Adapts workflow to active services (Firestore, Auth, Storage, Functions, Realtime DB).
+  - **NoSQL Data Modeling**: Distinguishes bounded arrays from unbounded collections (subcollections), treats denormalization as a write-amplification trade-off, and recommends distributed counters only when write rates exceed ~1 write/sec.
+  - **Comprehensive Security Rules**: Enforces default-deny invariants (`allow read, write: if false;`), input validation on `request.resource.data`, and supports diverse authorization patterns (User Ownership, Custom Claims, Collaborator lists, Dynamic RBAC, and Public Read).
+  - **Serverless Resilience**: Idempotent Cloud Functions design, event ID deduplication, cold start minimization, and budget alerts.
+  - **Local Emulator Suite Testing**: Verifies security rules locally against the Firebase Emulator Suite while noting production differences (rate limits, cross-region latencies, and IAM credentials).
+
+### 9. `postgresql`
+- **Frontmatter**: `name: postgresql`
+- **Purpose**: Relational database engineering workflow for PostgreSQL, providing ORM-neutral best practices for schema design, indexing, transactions, and safe migrations.
+- **Workflow Highlights**:
+  - **Schema & Relational Design**: 3NF normalization, precise data type selection (`BIGINT GENERATED ALWAYS AS IDENTITY`, native `UUIDv7` on PG 17+ / application-generated on PG <= 16, `TIMESTAMPTZ`, `NUMERIC`), and check constraints.
+  - **Indexing Strategy**: B-Tree for equality/range queries, composite indexing following leading-column semantics, partial indexes for skewed data, BRIN for large append-only series, and GIN/GIST for JSONB and full-text search.
+  - **ACID Transactions & Isolation**: Strict parameterized queries to prevent SQL injection, explicit transaction demarcation (`BEGIN ... COMMIT`), and mandatory application retry loops when using `REPEATABLE READ` or `SERIALIZABLE` due to serialization errors (40001).
+  - **Zero-Downtime Safe Migrations**: Reversible expand-and-contract migrations, non-blocking index creation with `CREATE INDEX CONCURRENTLY` (outside transaction blocks), and metadata-only `ALTER TABLE ... ADD COLUMN ... DEFAULT` (PG 11+ constant defaults).
+  - **Query Analysis & Performance**: Uses `EXPLAIN (ANALYZE, BUFFERS)` with strict warnings that `ANALYZE` executes mutations, plus PgBouncer session vs. transaction pooling constraints (named prepared statements, session-level state).
+
+---
+
+## Modular Technology Packs
+
+Unlike role packs (which define development responsibilities such as frontend, backend, or video), **technology packs** encapsulate best practices, runtime constraints, and security models for specific platforms or databases.
+
+| Technology Pack | ID | Key Skills | Included Templates | Dependencies |
+| :--- | :--- | :--- | :--- | :--- |
+| **Firebase** | `tech:firebase` | `firebase` | *(None — relies on role/core templates)* | `core` |
+| **PostgreSQL** | `tech:postgresql` | `postgresql` | *(None — relies on role/core templates)* | `core` |
+
+### Key Architectural Characteristics
+
+1. **Role-Independent**: Technology packs only depend on `core`. They do not force `role:backend`. A frontend app communicating directly with Firebase can use `role:frontend` + `tech:firebase`. A data pipeline or backend service can use `role:backend` + `tech:postgresql`.
+2. **Zero Collision Risk**: Technology packs provide specialized skills without duplicating role documentation templates, ensuring collision-free composition.
+3. **Detection vs. Explicit Choice**: Stack detection identifies technologies as facts/recommendations (`vibe-kit detect`). Packs are installed only when explicitly configured or specified via `--pack`.
 
 ---
 
